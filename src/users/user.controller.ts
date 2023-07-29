@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { CreateOrUpdateUserDto } from './dto/create-or-update-user.dto';
 
@@ -6,9 +6,14 @@ import { CreateOrUpdateUserDto } from './dto/create-or-update-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
+  @Get('/:id')
+  getUser(@Param("id") id: number) {
+    return this.usersService.getUser(id);
+  }
+
   @Get()
-  getUser(@Query("email") email: string) {
-    return this.usersService.getUser(email);
+  getUserByEmail(@Query("email") email: string) {
+    return this.usersService.getUserByEmail(email);
   }
 
   @Post()
