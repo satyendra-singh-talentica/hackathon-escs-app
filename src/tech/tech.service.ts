@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Tech } from './tech.entity';
+import { CreateOrUpdateTechDto } from './dto/create-or-update-tech.dto';
 
 @Injectable()
 export class TechService {
@@ -11,22 +12,15 @@ export class TechService {
         private techRepo: Repository<Tech>,
     ) { }
 
-    createTech(dto) {
+    createTech(dto: CreateOrUpdateTechDto) {
         const { name } = dto;
         const newTech = new Tech();
         newTech.name = name;
         return this.techRepo.save(newTech);
     }
 
-    createTechs(data) {
-        const allTech = [];
-        data.forEach(p => {
-            p["Tech"].split(",").map(x => x.trim()).map(x => x.toLowerCase()).forEach(t => {
-                allTech.push(t)
-            });
-        });
-        const dt = [...new Set(allTech)];
-        const techs = dt.map(t => {
+    createTechs(data: string[]) {
+        const techs = data.map(t => {
             const newTech = new Tech();
             newTech.name = t;
             return newTech;

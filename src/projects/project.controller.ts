@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, ValidationPipe } from '@nestjs/common';
 import { ProjectsService } from './project.service';
+import { CreateOrUpdateProjectDto } from './dto/create-or-update-project.dto';
 
 @Controller('/projects')
 export class ProjectsController {
@@ -16,6 +17,11 @@ export class ProjectsController {
   }
 
   @Post()
+  createProject(@Body(new ValidationPipe({ transform: true })) dto: CreateOrUpdateProjectDto) {
+    return this.projectsService.createProject(dto);
+  }
+
+  @Post('/bulk')
   createProjects(@Body() data) {
     return this.projectsService.createProjects(data);
   }

@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Project } from './project.entity';
+import { CreateOrUpdateProjectDto } from './dto/create-or-update-project.dto';
+import { TechService } from 'src/tech/tech.service';
 
 @Injectable()
 export class ProjectsService {
@@ -9,6 +11,8 @@ export class ProjectsService {
     constructor(
         @InjectRepository(Project)
         private projectRepo: Repository<Project>,
+
+        private readonly techService: TechService,
     ) { }
 
     createProjects(data) {
@@ -28,6 +32,20 @@ export class ProjectsService {
         });
         console.log([...new Set(allTech)]);
         return this.projectRepo.save(projects);
+    }
+
+    async createProject(data: CreateOrUpdateProjectDto) {
+        const newProject = new Project();
+        newProject.userId = data.userId;
+        newProject.name = data.name;
+        newProject.client = data.client;
+        newProject.description = data.description;
+        newProject.startDate = data.startDate;
+        newProject.endDate = data.endDate;
+        const techs = data.tech.split(",").map(x => x.trim()).map(x => x.toLowerCase());
+        await this.techService.createTechs(techs);
+        newProject.tech = techs;
+        return this.projectRepo.save(newProject);
     }
 
     getProjects(dto) {

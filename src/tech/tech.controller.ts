@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, ValidationPipe } from '@nestjs/common';
 import { TechService } from './tech.service';
+import { CreateOrUpdateTechDto } from './dto/create-or-update-tech.dto';
 
 @Controller('/tech')
 export class TechController {
@@ -11,7 +12,7 @@ export class TechController {
   }
 
   @Post()
-  createTech(@Body() dto) {
+  createTech(@Body(ValidationPipe) dto: CreateOrUpdateTechDto) {
     return this.techService.createTech(dto);
   }
 

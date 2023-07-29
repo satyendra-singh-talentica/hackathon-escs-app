@@ -1,8 +1,9 @@
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, Unique } from 'typeorm';
 
 import { BaseEntity } from '../entity/base.entity';
 
 @Entity()
+@Unique('UQ_tech_name', ['name'])
 export class Tech extends BaseEntity {
 
     @PrimaryGeneratedColumn()
