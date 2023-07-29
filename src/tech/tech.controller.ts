@@ -14,4 +14,9 @@ export class TechController {
   createTech(@Body() dto) {
     return this.techService.createTech(dto);
   }
+
+  @Post('/bulk')
+  createTechs(@Body() data) {
+    return this.techService.createTechs(data);
+  }
 }

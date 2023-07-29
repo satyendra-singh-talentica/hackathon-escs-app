@@ -9,6 +9,7 @@ import { Project } from './projects/project.entity';
 import { Tech } from './tech/tech.entity';
 import { TechModule } from './tech/tech.module';
 import { UsersModule } from './users/user.module';
+import { ProjectsModule } from './projects/project.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UsersModule } from './users/user.module';
     }),
     TechModule,
     UsersModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

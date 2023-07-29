@@ -25,6 +25,25 @@ export class UsersService {
         return this.userRepo.save(newUser);
     }
 
+    createUsers(data) {
+
+        const users = data.map(e => {
+            const newUser = new User();
+            newUser.employeeId = parseInt(e["Employee ID"], 10);
+            newUser.name = e["Name"];
+            newUser.email = e["Email"];
+            newUser.phone = null;
+            newUser.gender = null;
+            newUser.designation = e["Current Designation"];
+            newUser.github = null;
+            let now = new Date();
+            const fromEarlierTime = now.setFullYear(now.getFullYear() - (parseInt(e["Years Of Experience"], 10)));
+            newUser.dateOfJoining = new Date(fromEarlierTime);
+            return newUser;
+        });
+        return this.userRepo.save(users);
+    }
+
     getUsers() {
         return this.userRepo.find();
     }

@@ -15,4 +15,9 @@ export class UsersController {
   createUser(@Body(new ValidationPipe({ transform: true })) dto: CreateOrUpdateUserDto) {
     return this.usersService.createUser(dto);
   }
+
+  @Post('/bulk')
+  createUsers(@Body() data) {
+    return this.usersService.createUsers(data);
+  }
 }

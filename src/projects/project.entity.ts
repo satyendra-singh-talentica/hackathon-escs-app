@@ -27,8 +27,11 @@ export class Project extends BaseEntity {
     @Column({ type: 'text', array: true, nullable: true })
     tech: string[];
 
-    @Column({ type: 'tsvector', nullable: true })
+    @Column({ type: 'tsvector', nullable: true, select: false })
     tsv: string;
+
+    @Column()
+    userId: number;
 
     // relations
     @ManyToOne(() => User, (user) => user.projects)
