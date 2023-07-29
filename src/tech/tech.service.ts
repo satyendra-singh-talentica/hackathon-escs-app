@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Tech } from './tech.entity';
 import { CreateOrUpdateTechDto } from './dto/create-or-update-tech.dto';
 
@@ -19,13 +19,18 @@ export class TechService {
         return this.techRepo.save(newTech);
     }
 
-    createTechs(data: string[]) {
-        const techs = data.map(t => {
-            const newTech = new Tech();
-            newTech.name = t;
-            return newTech;
+    async createTechs(data: string[]) {
+        const dbTechs = await this.techRepo.find({ where: { name: In(data) } });
+        const dbTechNames = dbTechs.map(d => d.name);
+        const newTechs = [];
+        data.forEach(t => {
+            if (!dbTechNames.includes(t)) {
+                const newTech = new Tech();
+                newTech.name = t;
+                newTechs.push(newTech);
+            }
         });
-        return this.techRepo.save(techs);
+        return this.techRepo.save(newTechs);
     }
 
     getTech() {

@@ -2,6 +2,7 @@ import { PrimaryGeneratedColumn, Column, Entity, Unique, OneToMany } from 'typeo
 
 import { BaseEntity } from '../entity/base.entity';
 import { Project } from '../projects/project.entity';
+import { HardProblems } from 'src/hard-problems/hp.entity';
 
 @Entity()
 @Unique('UQ_user_employeeId', ['employeeId'])
@@ -41,4 +42,7 @@ export class User extends BaseEntity {
     // relations
     @OneToMany(() => Project, (projects) => projects.user)
     projects: Project[];
+
+    @OneToMany(() => HardProblems, (hp) => hp.user)
+    hps: HardProblems[];
 }

@@ -10,6 +10,8 @@ import { Tech } from './tech/tech.entity';
 import { TechModule } from './tech/tech.module';
 import { UsersModule } from './users/user.module';
 import { ProjectsModule } from './projects/project.module';
+import { HpsModule } from './hard-problems/hp.module';
+import { HardProblems } from './hard-problems/hp.entity';
 
 @Module({
   imports: [
@@ -21,12 +23,13 @@ import { ProjectsModule } from './projects/project.module';
       username: process.env.DATABASE_USERANME,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_DBNAME,
-      entities: [User, Project, Tech],
+      entities: [User, Project, Tech, HardProblems],
       synchronize: true,
     }),
     TechModule,
     UsersModule,
     ProjectsModule,
+    HpsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
