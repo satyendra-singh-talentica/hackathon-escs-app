@@ -12,6 +12,7 @@ import { UsersModule } from './users/user.module';
 import { ProjectsModule } from './projects/project.module';
 import { HpsModule } from './hard-problems/hp.module';
 import { HardProblems } from './hard-problems/hp.entity';
+import { ChatGPTModule } from './chatgpt/chatgpt.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { HardProblems } from './hard-problems/hp.entity';
     UsersModule,
     ProjectsModule,
     HpsModule,
+    ChatGPTModule,
   ],
   controllers: [AppController],
   providers: [AppService],

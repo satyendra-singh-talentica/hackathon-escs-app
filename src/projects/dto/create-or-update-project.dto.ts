@@ -28,7 +28,6 @@ export class CreateOrUpdateProjectDto {
     startDate: Date;
 
     @IsOptional()
-    @Transform(({ value }) => new Date(value))
-    @IsDate()
+    @Transform(({ value }) => value ? new Date(value) : null)
     endDate: Date;
 }
