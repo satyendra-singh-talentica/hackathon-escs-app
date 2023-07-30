@@ -49,7 +49,7 @@ export class ProjectsService {
     }
 
     getProjects(dto) {
-        return this.projectRepo.find({ where: dto, order: { createdAt: 'DESC' } });
+        return this.projectRepo.find({ where: dto, order: { startDate: 'DESC' } });
     }
 
     getProject(projectId: number) {
